@@ -1,26 +1,98 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-primary-50: #f1f8e9;
+  --color-primary-100: #e8f5ee;
+  --color-primary-200: #c5e1a5;
+  --color-primary-300: #aed581;
+  --color-primary-400: #3cb371;
+  --color-primary-500: #2e9e5b;
+  --color-primary-600: #267a4a;
+  --color-primary-700: #1b6e3f;
+  --color-primary-800: #1a5a3a;
+  --color-primary-900: #1b5e20;
+  --color-primary-dark: #0d3d1f;
+
+  --color-accent-orange: #f58a1f;
+  --color-accent-orange-dk: #e07810;
+  --color-accent-yellow: #f5d78e;
+  --color-accent-gold: #ffc107;
+  --color-accent-bar: #f59e0b;
+
+  --color-nav-green: #1e5631;
+  --color-nav-bg: #f5f7f2;
+  --color-hero-lime: #6ba85a;
+  --color-badge-blue: #2563eb;
+
+  --color-neutral-bg: #f8faf5;
+  --color-neutral-page-bg: #f5f7f2;
+  --color-neutral-border: #e8ebe4;
+
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-heading: var(--font-montserrat), var(--font-inter), system-ui, sans-serif;
+
+  --radius-pill: 50px;
+
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.08);
+  --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.14);
+  --shadow-contact-bar: 0 -4px 20px rgba(0, 0, 0, 0.08);
+  --shadow-hero-glow: 0 0 40px rgba(255, 193, 7, 0.45), 0 0 80px rgba(94, 177, 73, 0.25);
+
+  --background-image-hero-gradient: linear-gradient(105deg,
+      #2a6340 0%,
+      #3d7a52 40%,
+      #5a9a62 75%,
+      #6ba85a 100%);
+  --background-image-dark-section: linear-gradient(180deg, #1b5e20 0%, #2e7d32 100%);
+  --background-image-school-header: linear-gradient(180deg, #1a7a4a 0%, #1b6e3f 100%);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    @apply bg-[#f7f9f6] font-sans text-gray-900 antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-heading);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .section-container {
+    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-tag {
+    @apply mb-3 inline-block rounded-pill bg-primary-50 px-4 py-1 text-[11px] font-bold tracking-widest text-primary-700 uppercase;
+  }
+
+  .section-tag-dark {
+    @apply mb-3 inline-block rounded-pill border border-primary-600/40 bg-primary-900/40 px-4 py-1 text-[11px] font-bold tracking-widest text-primary-200 uppercase;
+  }
+
+  .btn-orange {
+    @apply rounded-xl bg-accent-orange px-6 py-2.5 text-sm font-bold text-white shadow-md transition-all duration-200 hover:bg-accent-orange-dk hover:shadow-lg;
+  }
+
+  .btn-nav-contact {
+    @apply inline-flex items-center justify-center rounded-lg bg-nav-green px-7 py-2.5 text-[14px] font-semibold text-white shadow-sm transition-colors hover:bg-[#164428];
+  }
+
+  .nav-link {
+    @apply text-[14px] font-medium text-[#3d4f42] transition-colors hover:text-nav-green;
+  }
+
+  .table-head {
+    @apply bg-primary-700 text-left text-[11px] font-semibold tracking-wide text-white uppercase;
+  }
+
+  .table-row-alt:nth-child(even) {
+    @apply bg-gray-50/80;
+  }
 }
