@@ -18,11 +18,11 @@ export default function SchoolInfoGrid({ info }) {
             <div
               key={item.label}
               className={`flex items-center justify-between gap-3 px-5 py-3.5 ${
-                rowIndex % 2 === 0 ? "bg-[#f7f9f8]" : "bg-white"
+                rowIndex % 2 === 0 ? "bg-[#F2F4F9]" : "bg-white"
               } ${colIndex === 1 ? "sm:border-l sm:border-gray-100" : ""}`}
             >
               <span className="text-xs text-gray-500">{item.label}</span>
-              <span className="text-right text-sm font-bold text-[#1b6e3f]">
+              <span className="text-right text-sm font-bold text-[#042352]">
                 {item.value}
               </span>
             </div>
@@ -31,9 +31,9 @@ export default function SchoolInfoGrid({ info }) {
       ))}
 
       {addressItem && (
-        <div className="flex items-start justify-between gap-4 border-t border-gray-100 bg-[#f7f9f8] px-5 py-3.5">
+        <div className="flex items-start justify-between gap-4 border-t border-gray-100 bg-[#F2F4F9] px-5 py-3.5">
           <span className="text-xs text-gray-500">{addressItem.label}</span>
-          <span className="max-w-[75%] text-right text-sm font-bold text-[#1b6e3f]">
+          <span className="max-w-[75%] text-right text-sm font-bold text-[#042352]">
             {addressItem.value}
           </span>
         </div>

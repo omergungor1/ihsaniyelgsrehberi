@@ -14,6 +14,21 @@ import SchoolContactBar from "./SchoolContactBar";
 export default function SchoolDetailModal({ school, onClose }) {
   if (!school) return null;
 
+  const hasCharts =
+    (school.chartData?.percentile?.length || 0) > 0 ||
+    (school.chartData?.quota?.length || 0) > 0;
+  const hasTransport = Boolean(
+    school.transport?.walk ||
+      school.transport?.bus ||
+      school.transport?.tram ||
+      school.transport?.car ||
+      school.transport?.description
+  );
+  const hasProgram = Boolean(
+    school.program?.description || school.program?.title
+  );
+  const hasAchievements = (school.achievements?.length || 0) > 0;
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/50 p-4 pt-8 pb-8 backdrop-blur-sm sm:items-center sm:p-6"
@@ -36,9 +51,11 @@ export default function SchoolDetailModal({ school, onClose }) {
         </button>
 
         <div className="flex-1 overflow-y-auto scroll-smooth pb-24">
-          <div className="bg-gradient-to-b from-[#1a7a4a] to-[#1b6e3f] px-6 pt-6 pb-5">
+          <div className="bg-gradient-to-b from-[#124DA6] to-[#042352] px-6 pt-6 pb-5">
             <SchoolHeader school={school} />
-            <SchoolBadges badges={school.badges} />
+            {school.badges?.length ? (
+              <SchoolBadges badges={school.badges} />
+            ) : null}
           </div>
 
           <div className="space-y-4 px-5 py-5">
@@ -47,13 +64,20 @@ export default function SchoolDetailModal({ school, onClose }) {
               imageAlt={school.name}
               address={school.address}
               distance={school.distance}
+              mapLink={school.mapLink}
             />
-            <SchoolInfoGrid info={school.info} />
-            <SchoolCharts data={school.chartData} />
-            <SchoolTransport transport={school.transport} />
-            <SchoolAbout description={school.description} />
-            <SchoolProgram program={school.program} />
-            <SchoolAchievements achievements={school.achievements} />
+            {school.info?.length ? <SchoolInfoGrid info={school.info} /> : null}
+            {hasCharts ? <SchoolCharts data={school.chartData} /> : null}
+            {hasTransport ? (
+              <SchoolTransport transport={school.transport} />
+            ) : null}
+            {school.description ? (
+              <SchoolAbout description={school.description} />
+            ) : null}
+            {hasProgram ? <SchoolProgram program={school.program} /> : null}
+            {hasAchievements ? (
+              <SchoolAchievements achievements={school.achievements} />
+            ) : null}
           </div>
         </div>
 

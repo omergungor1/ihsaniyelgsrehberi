@@ -94,7 +94,7 @@ export default function AnatolianHighSchoolsSection({ schools, onSchoolClick }) 
                       {school.taban}
                     </td>
                     <td className="px-4 py-3">
-                      <span className="rounded-badge bg-green-100 px-2 py-0.5 text-xs font-semibold text-green-700">
+                      <span className="rounded-badge bg-primary-50 px-2 py-0.5 text-xs font-semibold text-primary-700">
                         {school.yks}
                       </span>
                     </td>

@@ -1,12 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { schools } from "@/lib/data/schools";
 
-const quickValues = ["0.5", "1", "2", "3", "5"];
+const quickValues = ["0.5", "1", "2", "3", "5", "7"];
 
 function getChance(userValue, schoolValue) {
-  // Düşük yüzdelik = daha seçici okul
   if (userValue <= schoolValue) {
     return {
       key: "easy",
@@ -56,7 +54,7 @@ function getChance(userValue, schoolValue) {
   };
 }
 
-export default function PreferenceRobotSection({ onSchoolClick }) {
+export default function PreferenceRobotSection({ schools = [], onSchoolClick }) {
   const [input, setInput] = useState("5");
   const [submitted, setSubmitted] = useState(5);
 
@@ -64,11 +62,13 @@ export default function PreferenceRobotSection({ onSchoolClick }) {
     return schools
       .map((school) => {
         const taban = Number(school.yuzdelikNum ?? school.yuzdelik);
+        if (!Number.isFinite(taban)) return null;
         const chance = getChance(submitted, taban);
         return { school, taban, chance };
       })
+      .filter(Boolean)
       .sort((a, b) => a.taban - b.taban);
-  }, [submitted]);
+  }, [schools, submitted]);
 
   const handleCalculate = () => {
     const raw = String(input).replace(",", ".");
@@ -83,31 +83,30 @@ export default function PreferenceRobotSection({ onSchoolClick }) {
   };
 
   return (
-    <section id="tercih-robotu" className="bg-[#f8faf9] py-16 sm:py-20">
+    <section id="tercih-robotu" className="bg-[#F2F4F9] py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <span className="mb-4 inline-block rounded-full bg-[#e8f5ee] px-4 py-1.5 text-[11px] font-bold tracking-[0.14em] text-[#1b6e3f] uppercase">
+          <span className="mb-4 inline-block rounded-full bg-[#e8eef8] px-4 py-1.5 text-[11px] font-bold tracking-[0.14em] text-[#042352] uppercase">
             Şansım Ne?
           </span>
-          <h2 className="font-heading text-[28px] leading-tight font-bold text-[#1a2e22] sm:text-[34px]">
-            <span className="mr-2">🤖</span>Tercih Robotu
+          <h2 className="font-heading text-[28px] leading-tight font-bold text-[#042352] sm:text-[34px]">
+            Tercih Robotu
           </h2>
-          <p className="mt-4 text-[15px] leading-relaxed text-[#6b7c72]">
+          <p className="mt-4 text-[15px] leading-relaxed text-[#727F94]">
             LGS yüzdelik diliminizi girin, hangi okullara girebileceğinizi anında
             görün!
           </p>
         </div>
 
         <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-12">
-          {/* Sol: giriş kartı */}
           <div className="lg:col-span-4">
-            <div className="rounded-2xl border border-[#e2ebe5] bg-white p-5 shadow-[0_4px_20px_rgba(26,46,34,0.06)] sm:p-6">
-              <p className="mb-3 text-[11px] font-bold tracking-[0.12em] text-[#7a8a80] uppercase">
+            <div className="rounded-2xl border border-[#D6DFEC] bg-white p-5 shadow-[0_4px_20px_rgba(4,35,82,0.06)] sm:p-6">
+              <p className="mb-3 text-[11px] font-bold tracking-[0.12em] text-[#727F94] uppercase">
                 Yüzdelik Diliminiz
               </p>
 
-              <div className="flex overflow-hidden rounded-xl border-2 border-[#2d8e6c]">
-                <span className="flex items-center bg-[#f3faf6] px-3 text-sm font-bold text-[#1b6e3f]">
+              <div className="flex overflow-hidden rounded-xl border-2 border-[#2B6FD6]">
+                <span className="flex items-center bg-[#e8eef8] px-3 text-sm font-bold text-[#042352]">
                   %
                 </span>
                 <input
@@ -116,14 +115,14 @@ export default function PreferenceRobotSection({ onSchoolClick }) {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleCalculate()}
-                  className="min-w-0 flex-1 px-3 py-2.5 text-sm font-semibold text-[#1a2e22] outline-none"
+                  className="min-w-0 flex-1 px-3 py-2.5 text-sm font-semibold text-[#042352] outline-none"
                   placeholder="5"
                   aria-label="Yüzdelik dilim"
                 />
                 <button
                   type="button"
                   onClick={handleCalculate}
-                  className="bg-[#1b6e3f] px-4 py-2.5 text-[13px] font-bold whitespace-nowrap text-white transition-colors hover:bg-[#14532d]"
+                  className="bg-[#042352] px-4 py-2.5 text-[13px] font-bold whitespace-nowrap text-white transition-colors hover:bg-[#124DA6]"
                 >
                   Hesapla →
                 </button>
@@ -137,8 +136,8 @@ export default function PreferenceRobotSection({ onSchoolClick }) {
                     onClick={() => handleQuick(value)}
                     className={`rounded-full px-3 py-1.5 text-[12px] font-semibold transition-colors ${
                       String(submitted) === value
-                        ? "bg-[#1b6e3f] text-white"
-                        : "bg-[#f1f5f3] text-[#4a5c52] hover:bg-[#e5eee9]"
+                        ? "bg-[#042352] text-white"
+                        : "bg-[#e8eef8] text-[#465367] hover:bg-[#D6DFEC]"
                     }`}
                   >
                     %{value}
@@ -147,7 +146,7 @@ export default function PreferenceRobotSection({ onSchoolClick }) {
               </div>
 
               <div className="mt-6 space-y-2">
-                <div className="flex items-center gap-2 rounded-xl bg-[#dcfce7] px-3 py-2.5 text-[12px] font-semibold text-[#166534]">
+                <div className="flex items-center gap-2 rounded-xl bg-[#e8eef8] px-3 py-2.5 text-[12px] font-semibold text-[#042352]">
                   <span>✓</span>
                   Giriş İhtimali Yüksek (&lt;%20 fark)
                 </div>
@@ -163,14 +162,13 @@ export default function PreferenceRobotSection({ onSchoolClick }) {
             </div>
           </div>
 
-          {/* Sağ: sonuçlar */}
           <div className="lg:col-span-8">
-            <p className="mb-4 text-[14px] text-[#5a6b5e]">
-              <span className="font-bold text-[#1a2e22]">
+            <p className="mb-4 text-[14px] text-[#727F94]">
+              <span className="font-bold text-[#042352]">
                 %{submitted.toFixed(2)}
               </span>{" "}
               yüzdelik dilim için{" "}
-              <span className="font-bold text-[#1a2e22]">{results.length}</span>{" "}
+              <span className="font-bold text-[#042352]">{results.length}</span>{" "}
               okul analiz edildi:
             </p>
 
@@ -183,7 +181,7 @@ export default function PreferenceRobotSection({ onSchoolClick }) {
                   className={`overflow-hidden rounded-2xl border-2 bg-white p-4 text-left shadow-sm transition-shadow hover:shadow-md ${chance.border}`}
                 >
                   <div className="flex items-start justify-between gap-2">
-                    <h3 className="text-[14px] leading-snug font-bold text-[#1a2e22]">
+                    <h3 className="text-[14px] leading-snug font-bold text-[#042352]">
                       {school.name}
                     </h3>
                     <span
@@ -194,20 +192,20 @@ export default function PreferenceRobotSection({ onSchoolClick }) {
                     </span>
                   </div>
 
-                  <div className="mt-3 flex items-center justify-between text-[12px] text-[#6b7c72]">
+                  <div className="mt-3 flex items-center justify-between text-[12px] text-[#727F94]">
                     <span>
                       Okul Taban:{" "}
-                      <strong className="text-[#1a2e22]">%{taban.toFixed(2)}</strong>
+                      <strong className="text-[#042352]">%{taban.toFixed(2)}</strong>
                     </span>
                     <span>
                       Sizin:{" "}
-                      <strong className="text-[#1a2e22]">
+                      <strong className="text-[#042352]">
                         %{submitted.toFixed(2)}
                       </strong>
                     </span>
                   </div>
 
-                  <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-[#eef3f0]">
+                  <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-[#e8eef8]">
                     <div
                       className={`h-full rounded-full ${chance.bar}`}
                       style={{ width: `${chance.progress}%` }}

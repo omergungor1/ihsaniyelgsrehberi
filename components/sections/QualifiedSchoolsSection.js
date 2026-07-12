@@ -1,14 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { schools } from "@/lib/data/schools";
 
 const filters = ["Tümü", "Almanca", "İngilizce", "Fransızca", "Hazırlık"];
 
 const tagToneClass = {
   orange: "bg-[#fff4e8] text-[#c76a1a]",
-  green: "bg-[#e8f5ee] text-[#1b6e3f]",
-  teal: "bg-[#e6f7f5] text-[#0f766e]",
+  green: "bg-[#e8eef8] text-[#042352]",
+  teal: "bg-[#e8eef8] text-[#2B6FD6]",
 };
 
 function parseYuzdelik(value) {
@@ -17,7 +16,7 @@ function parseYuzdelik(value) {
   return Number.isFinite(num) ? num : Number.POSITIVE_INFINITY;
 }
 
-export default function QualifiedSchoolsSection({ onSchoolClick }) {
+export default function QualifiedSchoolsSection({ schools = [], onSchoolClick }) {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState("Tümü");
   const [sort, setSort] = useState("asc");
@@ -35,13 +34,13 @@ export default function QualifiedSchoolsSection({ onSchoolClick }) {
     }
 
     if (filter === "Almanca") {
-      list = list.filter((s) => s.language.includes("Almanca"));
+      list = list.filter((s) => (s.language || "").includes("Almanca"));
     } else if (filter === "İngilizce") {
-      list = list.filter((s) => s.language.includes("İngilizce"));
+      list = list.filter((s) => (s.language || "").includes("İngilizce"));
     } else if (filter === "Fransızca") {
-      list = list.filter((s) => s.language.includes("Fransızca"));
+      list = list.filter((s) => (s.language || "").includes("Fransızca"));
     } else if (filter === "Hazırlık") {
-      list = list.filter((s) => s.education.includes("Hzr"));
+      list = list.filter((s) => (s.education || "").includes("Hzr"));
     }
 
     list.sort((a, b) => {
@@ -51,19 +50,19 @@ export default function QualifiedSchoolsSection({ onSchoolClick }) {
     });
 
     return list;
-  }, [query, filter, sort]);
+  }, [schools, query, filter, sort]);
 
   return (
-    <section id="okullar" className="bg-[#f5fbf7] py-16 sm:py-20">
+    <section id="okullar" className="bg-[#F2F4F9] py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <span className="mb-4 inline-block rounded-full bg-[#e8f5ee] px-4 py-1.5 text-[11px] font-bold tracking-[0.14em] text-[#1b6e3f] uppercase">
+          <span className="mb-4 inline-block rounded-full bg-[#e8eef8] px-4 py-1.5 text-[11px] font-bold tracking-[0.14em] text-[#042352] uppercase">
             Çalıştığımız Okullar
           </span>
-          <h2 className="font-heading text-[28px] leading-tight font-bold text-[#1a2e22] sm:text-[34px]">
+          <h2 className="font-heading text-[28px] leading-tight font-bold text-[#042352] sm:text-[34px]">
             Nitelikli Liseler
           </h2>
-          <p className="mt-4 text-[15px] leading-relaxed text-[#6b7c72]">
+          <p className="mt-4 text-[15px] leading-relaxed text-[#727F94]">
             Kurum olarak çalışma yürüttüğümüz nitelikli liselere ait genel
             bilgiler ve detaylı analizler.
           </p>
@@ -82,7 +81,7 @@ export default function QualifiedSchoolsSection({ onSchoolClick }) {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Okul veya ilçe ara..."
-              className="w-full rounded-xl border border-[#e2ebe5] bg-white py-2.5 pr-4 pl-10 text-sm text-[#1a2e22] outline-none placeholder:text-[#9aaba1] focus:border-[#2d8e6c] focus:ring-2 focus:ring-[#2d8e6c]/20"
+              className="w-full rounded-xl border border-[#D6DFEC] bg-white py-2.5 pr-4 pl-10 text-sm text-[#042352] outline-none placeholder:text-[#727F94] focus:border-[#2B6FD6] focus:ring-2 focus:ring-[#2B6FD6]/20"
             />
           </div>
 
@@ -94,8 +93,8 @@ export default function QualifiedSchoolsSection({ onSchoolClick }) {
                 onClick={() => setFilter(item)}
                 className={`rounded-full px-4 py-2 text-[13px] font-semibold transition-colors ${
                   filter === item
-                    ? "bg-[#2d8e6c] text-white shadow-sm"
-                    : "border border-[#e2ebe5] bg-white text-[#4a5c52] hover:bg-[#f0f7f3]"
+                    ? "bg-[#2B6FD6] text-white shadow-sm"
+                    : "border border-[#D6DFEC] bg-white text-[#465367] hover:bg-[#e8eef8]"
                 }`}
               >
                 {item}
@@ -106,7 +105,7 @@ export default function QualifiedSchoolsSection({ onSchoolClick }) {
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value)}
-            className="rounded-full border border-[#e2ebe5] bg-white px-4 py-2.5 text-[13px] font-medium text-[#4a5c52] outline-none focus:border-[#2d8e6c]"
+            className="rounded-full border border-[#D6DFEC] bg-white px-4 py-2.5 text-[13px] font-medium text-[#465367] outline-none focus:border-[#2B6FD6]"
           >
             <option value="asc">Yüzdelik (Düşük → Yüksek)</option>
             <option value="desc">Yüzdelik (Yüksek → Düşük)</option>
@@ -114,11 +113,11 @@ export default function QualifiedSchoolsSection({ onSchoolClick }) {
         </div>
 
         {/* Tablo */}
-        <div className="mt-6 overflow-hidden rounded-2xl border border-[#e2ebe5] bg-white shadow-[0_4px_20px_rgba(26,46,34,0.06)]">
+        <div className="mt-6 overflow-hidden rounded-2xl border border-[#D6DFEC] bg-white shadow-[0_4px_20px_rgba(4,35,82,0.06)]">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[820px]">
               <thead>
-                <tr className="bg-[#2d8e6c] text-left text-[11px] font-bold tracking-wide text-white uppercase">
+                <tr className="bg-[#2B6FD6] text-left text-[11px] font-bold tracking-wide text-white uppercase">
                   <th className="px-4 py-3.5">S.N</th>
                   <th className="px-4 py-3.5">Okul Adı</th>
                   <th className="px-4 py-3.5">Tür</th>
@@ -133,22 +132,22 @@ export default function QualifiedSchoolsSection({ onSchoolClick }) {
                   <tr
                     key={school.id}
                     onClick={() => onSchoolClick(school.id)}
-                    className={`cursor-pointer border-t border-[#eef3f0] transition-colors hover:bg-[#f0faf5] ${
+                    className={`cursor-pointer border-t border-[#e8eef8] transition-colors hover:bg-[#e8eef8] ${
                       index % 2 === 0 ? "bg-white" : "bg-[#f8fcfa]"
                     }`}
                   >
                     <td className="px-4 py-3.5">
-                      <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-[#e8f5ee] text-xs font-bold text-[#1b6e3f]">
+                      <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-[#e8eef8] text-xs font-bold text-[#042352]">
                         {index + 1}
                       </span>
                     </td>
-                    <td className="px-4 py-3.5 text-sm font-bold text-[#1a2e22]">
+                    <td className="px-4 py-3.5 text-sm font-bold text-[#042352]">
                       {school.name}
                     </td>
-                    <td className="px-4 py-3.5 text-sm text-[#5a6b5e]">{school.type}</td>
-                    <td className="px-4 py-3.5 text-sm text-[#5a6b5e]">{school.district}</td>
-                    <td className="px-4 py-3.5 text-sm text-[#5a6b5e]">{school.education}</td>
-                    <td className="px-4 py-3.5 text-sm text-[#5a6b5e]">{school.language}</td>
+                    <td className="px-4 py-3.5 text-sm text-[#727F94]">{school.type}</td>
+                    <td className="px-4 py-3.5 text-sm text-[#727F94]">{school.district}</td>
+                    <td className="px-4 py-3.5 text-sm text-[#727F94]">{school.education}</td>
+                    <td className="px-4 py-3.5 text-sm text-[#727F94]">{school.language}</td>
                     <td className="px-4 py-3.5">
                       <span className="inline-flex rounded-full bg-[#f2994a] px-3 py-1 text-xs font-bold text-white">
                         {school.yuzdelik}
@@ -166,7 +165,7 @@ export default function QualifiedSchoolsSection({ onSchoolClick }) {
           {filteredSchools.map((school) => (
             <article
               key={school.id}
-              className="overflow-hidden rounded-2xl border border-[#e8efe9] bg-white shadow-[0_4px_20px_rgba(26,46,34,0.06)] transition-shadow hover:shadow-[0_8px_28px_rgba(26,46,34,0.1)]"
+              className="overflow-hidden rounded-2xl border border-[#D6DFEC] bg-white shadow-[0_4px_20px_rgba(4,35,82,0.06)] transition-shadow hover:shadow-[0_8px_28px_rgba(4,35,82,0.1)]"
             >
               <div className="relative h-44">
                 <div
@@ -181,8 +180,8 @@ export default function QualifiedSchoolsSection({ onSchoolClick }) {
               </div>
 
               <div className="px-5 pt-5 pb-4">
-                <h3 className="text-[16px] font-bold text-[#1a2e22]">{school.name}</h3>
-                <p className="mt-1.5 flex items-center gap-1 text-[13px] text-[#7a8a80]">
+                <h3 className="text-[16px] font-bold text-[#042352]">{school.name}</h3>
+                <p className="mt-1.5 flex items-center gap-1 text-[13px] text-[#727F94]">
                   <span>📍</span>
                   {school.district} / {school.city}
                 </p>
@@ -198,17 +197,17 @@ export default function QualifiedSchoolsSection({ onSchoolClick }) {
                   ))}
                 </div>
 
-                <div className="mt-5 grid grid-cols-3 border-t border-[#eef3f0] pt-4 text-center">
+                <div className="mt-5 grid grid-cols-3 border-t border-[#e8eef8] pt-4 text-center">
                   <div>
-                    <p className="text-[16px] font-extrabold text-[#1a2e22]">{school.yuzdelik}</p>
+                    <p className="text-[16px] font-extrabold text-[#042352]">{school.yuzdelik}</p>
                     <p className="mt-0.5 text-[11px] text-[#8aa094]">Yüzdelik</p>
                   </div>
                   <div>
-                    <p className="text-[16px] font-extrabold text-[#1a2e22]">{school.kontenjan}</p>
+                    <p className="text-[16px] font-extrabold text-[#042352]">{school.kontenjan}</p>
                     <p className="mt-0.5 text-[11px] text-[#8aa094]">Kontenjan</p>
                   </div>
                   <div>
-                    <p className="text-[16px] font-extrabold text-[#1a2e22]">{school.education}</p>
+                    <p className="text-[16px] font-extrabold text-[#042352]">{school.education}</p>
                     <p className="mt-0.5 text-[11px] text-[#8aa094]">Süre</p>
                   </div>
                 </div>
@@ -226,7 +225,7 @@ export default function QualifiedSchoolsSection({ onSchoolClick }) {
         </div>
 
         {filteredSchools.length === 0 && (
-          <p className="mt-10 text-center text-sm text-[#6b7c72]">
+          <p className="mt-10 text-center text-sm text-[#727F94]">
             Arama kriterlerinize uygun okul bulunamadı.
           </p>
         )}

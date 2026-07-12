@@ -1,6 +1,4 @@
 import { Inter, Montserrat } from "next/font/google";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
 import "./globals.css";
 
 const inter = Inter({
@@ -18,17 +16,13 @@ const montserrat = Montserrat({
 export const metadata = {
   title: "İhsaniye LGS Rehberi | Okul Tercih Platformu",
   description:
-    "LGS puanınıza göre en uygun okulu bulun. 500+ okul, gelişmiş filtreleme.",
+    "LGS puanınıza göre en uygun okulu bulun. Nitelikli liseler, tercih rehberliği.",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="tr" className={`${inter.variable} ${montserrat.variable} h-full`}>
-      <body className="flex min-h-full flex-col">
-        <Navbar />
-        <main className="flex-1 pt-[76px]">{children}</main>
-        <Footer />
-      </body>
+      <body className="min-h-full">{children}</body>
     </html>
   );
 }

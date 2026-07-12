@@ -62,15 +62,15 @@ export default function PreferenceMistakesSection() {
     <section id="hatalar" className="bg-white py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <span className="mb-4 inline-block rounded-full bg-[#e8f5ee] px-4 py-1.5 text-[11px] font-bold tracking-[0.14em] text-[#1b6e3f] uppercase">
+          <span className="mb-4 inline-block rounded-full bg-[#e8eef8] px-4 py-1.5 text-[11px] font-bold tracking-[0.14em] text-[#042352] uppercase">
             Dikkat
           </span>
 
-          <h2 className="font-heading text-[28px] leading-tight font-bold text-[#1a2e22] sm:text-[34px]">
+          <h2 className="font-heading text-[28px] leading-tight font-bold text-[#042352] sm:text-[34px]">
             Tercih Döneminde En Çok Yapılan Hatalar
           </h2>
 
-          <p className="mt-4 text-[15px] leading-relaxed text-[#6b7c72]">
+          <p className="mt-4 text-[15px] leading-relaxed text-[#727F94]">
             Doğru tercihi yapmak kadar, yaygın hatalardan uzak durmak da kritiktir.
           </p>
         </div>
@@ -79,22 +79,22 @@ export default function PreferenceMistakesSection() {
           {mistakes.map((item) => (
             <div
               key={item.num}
-              className="flex overflow-hidden rounded-2xl bg-[#f7f9f6] shadow-[0_2px_12px_rgba(26,46,34,0.04)]"
+              className="flex overflow-hidden rounded-2xl bg-[#F2F4F9] shadow-[0_2px_12px_rgba(4,35,82,0.04)]"
             >
-              {/* Yeşil + altın iki tonlu sol kenarlık */}
-              <div className="w-[5px] flex-shrink-0 bg-gradient-to-b from-[#1b6e3f] via-[#2e9e5b] to-[#d4a017]" />
+              {/* Mavi + altın iki tonlu sol kenarlık */}
+              <div className="w-[5px] flex-shrink-0 bg-gradient-to-b from-[#042352] via-[#2B6FD6] to-[#d4a017]" />
 
               <div className="flex flex-1 items-start gap-4 px-5 py-5">
-                <span className="font-heading text-[22px] leading-none font-extrabold text-[#1b6e3f]">
+                <span className="font-heading text-[22px] leading-none font-extrabold text-[#042352]">
                   {item.num}
                 </span>
 
                 <div className="min-w-0 flex-1">
-                  <h3 className="mb-1.5 text-[15px] font-bold text-[#1a2e22]">
+                  <h3 className="mb-1.5 text-[15px] font-bold text-[#042352]">
                     <span className="mr-1.5">{item.icon}</span>
                     {item.title}
                   </h3>
-                  <p className="text-[13px] leading-relaxed text-[#7a8a80]">
+                  <p className="text-[13px] leading-relaxed text-[#727F94]">
                     {item.description}
                   </p>
                 </div>

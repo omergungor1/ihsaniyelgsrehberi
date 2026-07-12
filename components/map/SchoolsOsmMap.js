@@ -10,7 +10,7 @@ import {
 } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { dormitory, mapTileLayers } from "@/lib/data/map";
+import { dormitory as defaultDorm, mapTileLayers } from "@/lib/data/map";
 
 function dormIcon() {
   return L.divIcon({
@@ -32,7 +32,7 @@ function schoolIcon() {
     className: "",
     html: `<div style="
       width:28px;height:28px;border-radius:9999px;
-      background:#0f766e;border:3px solid white;
+      background:#2B6FD6;border:3px solid white;
       box-shadow:0 3px 10px rgba(0,0,0,.22);
       display:flex;align-items:center;justify-content:center;
       font-size:12px;color:white;">📍</div>`,
@@ -54,16 +54,17 @@ function FlyTo({ position, zoom }) {
 
 export default function SchoolsOsmMap({
   schools,
+  dormitory: dormProp,
   mapStyle,
   focusPosition,
   onMarkerClick,
 }) {
+  const dorm = dormProp || defaultDorm;
   const tile = mapTileLayers[mapStyle] || mapTileLayers.standart;
+  const lat = Number(dorm.lat);
+  const lng = Number(dorm.lng);
 
-  const center = useMemo(
-    () => [dormitory.lat, dormitory.lng],
-    []
-  );
+  const center = useMemo(() => [lat, lng], [lat, lng]);
 
   return (
     <MapContainer
@@ -76,9 +77,9 @@ export default function SchoolsOsmMap({
       <TileLayer key={mapStyle} attribution={tile.attribution} url={tile.url} />
       <FlyTo position={focusPosition} zoom={15} />
 
-      <Marker position={[dormitory.lat, dormitory.lng]} icon={dormIcon()}>
+      <Marker position={[lat, lng]} icon={dormIcon()}>
         <Popup>
-          <strong>{dormitory.name}</strong>
+          <strong>{dorm.shortName || dorm.name || "Yurdumuz"}</strong>
           <br />
           Merkez yurt konumu
         </Popup>

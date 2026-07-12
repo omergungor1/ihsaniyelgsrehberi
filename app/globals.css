@@ -1,17 +1,24 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary-50: #f1f8e9;
-  --color-primary-100: #e8f5ee;
-  --color-primary-200: #c5e1a5;
-  --color-primary-300: #aed581;
-  --color-primary-400: #3cb371;
-  --color-primary-500: #2e9e5b;
-  --color-primary-600: #267a4a;
-  --color-primary-700: #1b6e3f;
-  --color-primary-800: #1a5a3a;
-  --color-primary-900: #1b5e20;
-  --color-primary-dark: #0d3d1f;
+  --color-primary-50: #e8eef8;
+  --color-primary-100: #d6e4f7;
+  --color-primary-200: #a8c4ef;
+  --color-primary-300: #7aa3e5;
+  --color-primary-400: #4c82dc;
+  --color-primary-500: #2B6FD6;
+  --color-primary-600: #124DA6;
+  --color-primary-700: #042352;
+  --color-primary-800: #031a3d;
+  --color-primary-900: #021433;
+  --color-primary-dark: #02102a;
+
+  --color-secondary: #465367;
+  --color-accent: #2B6FD6;
+  --color-background: #F2F4F9;
+  --color-surface: #FFFFFF;
+  --color-border: #D6DFEC;
+  --color-muted: #727F94;
 
   --color-accent-orange: #f58a1f;
   --color-accent-orange-dk: #e07810;
@@ -19,14 +26,14 @@
   --color-accent-gold: #ffc107;
   --color-accent-bar: #f59e0b;
 
-  --color-nav-green: #1e5631;
-  --color-nav-bg: #f5f7f2;
-  --color-hero-lime: #6ba85a;
-  --color-badge-blue: #2563eb;
+  --color-nav-green: #042352;
+  --color-nav-bg: #F2F4F9;
+  --color-hero-lime: #2B6FD6;
+  --color-badge-blue: #2B6FD6;
 
-  --color-neutral-bg: #f8faf5;
-  --color-neutral-page-bg: #f5f7f2;
-  --color-neutral-border: #e8ebe4;
+  --color-neutral-bg: #F2F4F9;
+  --color-neutral-page-bg: #F2F4F9;
+  --color-neutral-border: #D6DFEC;
 
   --font-sans: var(--font-inter), system-ui, sans-serif;
   --font-heading: var(--font-montserrat), var(--font-inter), system-ui, sans-serif;
@@ -36,15 +43,15 @@
   --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.08);
   --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.14);
   --shadow-contact-bar: 0 -4px 20px rgba(0, 0, 0, 0.08);
-  --shadow-hero-glow: 0 0 40px rgba(255, 193, 7, 0.45), 0 0 80px rgba(94, 177, 73, 0.25);
+  --shadow-hero-glow: 0 0 40px rgba(255, 193, 7, 0.45), 0 0 80px rgba(43, 111, 214, 0.25);
 
   --background-image-hero-gradient: linear-gradient(105deg,
-      #2a6340 0%,
-      #3d7a52 40%,
-      #5a9a62 75%,
-      #6ba85a 100%);
-  --background-image-dark-section: linear-gradient(180deg, #1b5e20 0%, #2e7d32 100%);
-  --background-image-school-header: linear-gradient(180deg, #1a7a4a 0%, #1b6e3f 100%);
+      #042352 0%,
+      #0a3470 35%,
+      #124DA6 70%,
+      #2B6FD6 100%);
+  --background-image-dark-section: linear-gradient(180deg, #042352 0%, #124DA6 100%);
+  --background-image-school-header: linear-gradient(180deg, #124DA6 0%, #042352 100%);
 }
 
 @layer base {
@@ -53,7 +60,7 @@
   }
 
   body {
-    @apply bg-[#f7f9f6] font-sans text-gray-900 antialiased;
+    @apply bg-[#F2F4F9] font-sans text-gray-900 antialiased;
   }
 
   h1,
@@ -81,11 +88,11 @@
   }
 
   .btn-nav-contact {
-    @apply inline-flex items-center justify-center rounded-lg bg-nav-green px-7 py-2.5 text-[14px] font-semibold text-white shadow-sm transition-colors hover:bg-[#164428];
+    @apply inline-flex items-center justify-center rounded-lg bg-nav-green px-7 py-2.5 text-[14px] font-semibold text-white shadow-sm transition-colors hover:bg-[#124DA6];
   }
 
   .nav-link {
-    @apply text-[14px] font-medium text-[#3d4f42] transition-colors hover:text-nav-green;
+    @apply text-[14px] font-medium text-[#465367] transition-colors hover:text-nav-green;
   }
 
   .table-head {

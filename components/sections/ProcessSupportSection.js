@@ -33,7 +33,7 @@ const steps = [
 
 export default function ProcessSupportSection() {
   return (
-    <section className="bg-[#135d44] py-16 sm:py-20">
+    <section className="bg-[#042352] py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <span className="mb-4 inline-block rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-[11px] font-bold tracking-[0.14em] text-white/90 uppercase">

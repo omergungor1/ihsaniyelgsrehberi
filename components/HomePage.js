@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import HeroSection from "@/components/sections/HeroSection";
 import SchoolSelectionSection from "@/components/sections/SchoolSelectionSection";
 import PreferenceMistakesSection from "@/components/sections/PreferenceMistakesSection";
@@ -13,25 +13,48 @@ import StudentReviewsSection from "@/components/sections/StudentReviewsSection";
 import ProcessSupportSection from "@/components/sections/ProcessSupportSection";
 import ContactSection from "@/components/sections/ContactSection";
 import SchoolDetailModal from "@/components/school/SchoolDetailModal";
-import { getSchoolById } from "@/lib/data/schools";
 
-export default function HomePage() {
+export default function HomePage({ data }) {
+  const {
+    hero = {},
+    contact = {},
+    map = {},
+    schools = [],
+    calendar = [],
+    yks = null,
+    reviews = { students: [], graduates: [] },
+  } = data || {};
+
   const [selectedSchoolId, setSelectedSchoolId] = useState(null);
-  const selectedSchool = selectedSchoolId ? getSchoolById(selectedSchoolId) : null;
+
+  const selectedSchool = useMemo(
+    () => schools.find((s) => s.id === selectedSchoolId) || null,
+    [schools, selectedSchoolId]
+  );
 
   return (
     <>
-      <HeroSection />
+      <HeroSection hero={hero} />
       <SchoolSelectionSection />
       <PreferenceMistakesSection />
-      <QualifiedSchoolsSection onSchoolClick={setSelectedSchoolId} />
-      <SchoolsMapSection onSchoolClick={setSelectedSchoolId} />
-      <PreferenceRobotSection onSchoolClick={setSelectedSchoolId} />
-      <PreferenceCalendarSection />
-      <YKSSuccessSection />
-      <StudentReviewsSection />
+      <QualifiedSchoolsSection
+        schools={schools}
+        onSchoolClick={setSelectedSchoolId}
+      />
+      <SchoolsMapSection
+        schools={schools}
+        mapSettings={map}
+        onSchoolClick={setSelectedSchoolId}
+      />
+      <PreferenceRobotSection
+        schools={schools}
+        onSchoolClick={setSelectedSchoolId}
+      />
+      <PreferenceCalendarSection items={calendar} />
+      <YKSSuccessSection yks={yks} />
+      <StudentReviewsSection reviews={reviews} />
       <ProcessSupportSection />
-      <ContactSection />
+      <ContactSection contact={contact} mapSettings={map} />
 
       {selectedSchool && (
         <SchoolDetailModal
