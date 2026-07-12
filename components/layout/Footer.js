@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import FloatingActions from "@/components/layout/FloatingActions";
 
 export default function Footer({ contact = {} }) {
   const brand = contact.brand || "İHSANİYE";
@@ -12,7 +13,7 @@ export default function Footer({ contact = {} }) {
         <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
           <div className="flex items-start gap-3">
             <Image
-              src="/lgoo.png"
+              src="/logo.png"
               alt="İhsaniye Öğrenci Yurdu"
               width={44}
               height={44}
@@ -83,28 +84,7 @@ export default function Footer({ contact = {} }) {
         </div>
       </div>
 
-      <div className="fixed right-4 bottom-4 z-40 flex flex-col gap-2">
-        {whatsapp ? (
-          <a
-            href={`https://wa.me/90${String(whatsapp).replace(/^0/, "")}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex h-12 w-12 items-center justify-center rounded-full bg-[#25d366] text-xl text-white shadow-lg transition-transform hover:scale-105"
-            aria-label="WhatsApp"
-          >
-            💬
-          </a>
-        ) : null}
-        {phone ? (
-          <a
-            href={`tel:${phone}`}
-            className="flex h-12 w-12 items-center justify-center rounded-full bg-[#042352] text-xl text-white shadow-lg transition-transform hover:scale-105"
-            aria-label="Ara"
-          >
-            📞
-          </a>
-        ) : null}
-      </div>
+      <FloatingActions whatsapp={whatsapp} phone={phone} />
     </footer>
   );
 }

@@ -296,8 +296,18 @@ export default function SchoolForm({ school }) {
       <div className="rounded-2xl border border-[#D6DFEC] bg-white p-5 shadow-sm">
         <h2 className="mb-4 text-[15px] font-bold text-[#042352]">Etiketler & Rozetler</h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <ChipInput name="tags_json" label="Etiketler" initialValues={school?.tags || []} />
-          <ChipInput name="badges_json" label="Rozetler" initialValues={school?.badges || []} />
+          <ChipInput
+            name="tags_json"
+            label="Etiketler"
+            format="tags"
+            initialValues={school?.tags || []}
+          />
+          <ChipInput
+            name="badges_json"
+            label="Rozetler"
+            format="badges"
+            initialValues={school?.badges || []}
+          />
         </div>
       </div>
 

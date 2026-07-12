@@ -134,11 +134,10 @@ export default function PreferenceRobotSection({ schools = [], onSchoolClick }) 
                     key={value}
                     type="button"
                     onClick={() => handleQuick(value)}
-                    className={`rounded-full px-3 py-1.5 text-[12px] font-semibold transition-colors ${
-                      String(submitted) === value
-                        ? "bg-[#042352] text-white"
-                        : "bg-[#e8eef8] text-[#465367] hover:bg-[#D6DFEC]"
-                    }`}
+                    className={`rounded-full px-3 py-1.5 text-[12px] font-semibold transition-colors ${String(submitted) === value
+                      ? "bg-[#042352] text-white"
+                      : "bg-[#e8eef8] text-[#465367] hover:bg-[#D6DFEC]"
+                      }`}
                   >
                     %{value}
                   </button>

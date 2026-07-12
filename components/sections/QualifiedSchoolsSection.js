@@ -28,8 +28,8 @@ export default function QualifiedSchoolsSection({ schools = [], onSchoolClick })
       const q = query.trim().toLocaleLowerCase("tr");
       list = list.filter(
         (s) =>
-          s.name.toLocaleLowerCase("tr").includes(q) ||
-          s.district.toLocaleLowerCase("tr").includes(q)
+          (s.name || "").toLocaleLowerCase("tr").includes(q) ||
+          (s.district || "").toLocaleLowerCase("tr").includes(q)
       );
     }
 

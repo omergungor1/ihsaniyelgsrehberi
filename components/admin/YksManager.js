@@ -16,11 +16,30 @@ import DeleteButton from "@/components/admin/DeleteButton";
 const inputClass =
   "w-full rounded-lg border border-[#D6DFEC] px-3 py-2 text-[13px] text-[#042352] outline-none focus:border-[#2B6FD6] focus:ring-2 focus:ring-[#2B6FD6]/20";
 
-function SectionCard({ title, children, actions }) {
+function Field({ label, hint, className = "", children }) {
+  return (
+    <div className={className}>
+      <label className="mb-1 block text-[12px] font-bold text-[#042352]">
+        {label}
+      </label>
+      {hint ? (
+        <p className="mb-1.5 text-[11px] leading-snug text-[#727F94]">{hint}</p>
+      ) : null}
+      {children}
+    </div>
+  );
+}
+
+function SectionCard({ title, description, children, actions }) {
   return (
     <div className="rounded-2xl border border-[#D6DFEC] bg-white p-5 shadow-sm">
-      <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-[15px] font-bold text-[#042352]">{title}</h2>
+      <div className="mb-4 flex items-center justify-between gap-3">
+        <div>
+          <h2 className="text-[15px] font-bold text-[#042352]">{title}</h2>
+          {description ? (
+            <p className="mt-1 text-[12px] text-[#727F94]">{description}</p>
+          ) : null}
+        </div>
         {actions}
       </div>
       {children}
@@ -122,49 +141,79 @@ function StatsManager({ stats }) {
   }
 
   return (
-    <SectionCard title="İstatistikler (11, %0.01 vb.)">
-      <form onSubmit={handleSubmit} className="mb-5 grid grid-cols-1 gap-2 sm:grid-cols-12">
+    <SectionCard
+      title="İstatistik Kartları"
+      description="Sitede üstte görünen sayısal başarı kutucukları (ör. 1 · TG 137.si)."
+    >
+      <form onSubmit={handleSubmit} className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-12">
         <input type="hidden" name="id" value={editing.id} readOnly />
-        <input
-          placeholder="İkon"
-          name="icon"
-          value={editing.icon}
-          onChange={(e) => setEditing({ ...editing, icon: e.target.value })}
-          className={`${inputClass} sm:col-span-2`}
-        />
-        <input
-          placeholder="Değer"
-          name="value"
-          required
-          value={editing.value}
-          onChange={(e) => setEditing({ ...editing, value: e.target.value })}
-          className={`${inputClass} sm:col-span-3`}
-        />
-        <input
-          placeholder="Etiket"
-          name="label"
-          required
-          value={editing.label}
-          onChange={(e) => setEditing({ ...editing, label: e.target.value })}
-          className={`${inputClass} sm:col-span-4`}
-        />
-        <input
-          type="number"
-          placeholder="Sıra"
-          name="sort_order"
-          value={editing.sort_order}
-          onChange={(e) => setEditing({ ...editing, sort_order: e.target.value })}
-          className={`${inputClass} sm:col-span-2`}
-        />
-        <label className="flex items-center justify-center gap-1.5 sm:col-span-1">
+        <Field
+          label="İkon"
+          hint="Emoji (🏆, ⭐, 📈)"
+          className="sm:col-span-2"
+        >
           <input
-            type="checkbox"
-            name="is_active"
-            checked={editing.is_active}
-            onChange={(e) => setEditing({ ...editing, is_active: e.target.checked })}
-            className="h-4 w-4 rounded border-[#D6DFEC] text-[#2B6FD6]"
+            name="icon"
+            value={editing.icon}
+            onChange={(e) => setEditing({ ...editing, icon: e.target.value })}
+            className={inputClass}
+            placeholder="🏆"
           />
-        </label>
+        </Field>
+        <Field
+          label="Sayı / Değer"
+          hint="Kartta büyük yazılan sayı"
+          className="sm:col-span-3"
+        >
+          <input
+            name="value"
+            required
+            value={editing.value}
+            onChange={(e) => setEditing({ ...editing, value: e.target.value })}
+            className={inputClass}
+            placeholder="Örn: 1"
+          />
+        </Field>
+        <Field
+          label="Açıklama"
+          hint="Sayının altında görünen metin"
+          className="sm:col-span-4"
+        >
+          <input
+            name="label"
+            required
+            value={editing.label}
+            onChange={(e) => setEditing({ ...editing, label: e.target.value })}
+            className={inputClass}
+            placeholder="Örn: TG 137.si"
+          />
+        </Field>
+        <Field
+          label="Sıra"
+          hint="Soldan sağa sıralama"
+          className="sm:col-span-2"
+        >
+          <input
+            type="number"
+            name="sort_order"
+            value={editing.sort_order}
+            onChange={(e) => setEditing({ ...editing, sort_order: e.target.value })}
+            className={inputClass}
+            placeholder="0"
+          />
+        </Field>
+        <Field label="Yayında" hint="Sitede göster" className="sm:col-span-1">
+          <label className="flex h-[38px] items-center gap-2 rounded-lg border border-[#D6DFEC] px-3">
+            <input
+              type="checkbox"
+              name="is_active"
+              checked={editing.is_active}
+              onChange={(e) => setEditing({ ...editing, is_active: e.target.checked })}
+              className="h-4 w-4 rounded border-[#D6DFEC] text-[#2B6FD6]"
+            />
+            <span className="text-[12px] font-semibold text-[#465367]">Aktif</span>
+          </label>
+        </Field>
         <div className="flex gap-2 sm:col-span-12">
           <button
             type="submit"
@@ -254,56 +303,90 @@ function GraduatesManager({ graduates }) {
   }
 
   return (
-    <SectionCard title="Mezunlar">
-      <form onSubmit={handleSubmit} className="mb-5 grid grid-cols-1 gap-2 sm:grid-cols-12">
+    <SectionCard
+      title="Mezunlar"
+      description="YKS sonrası yerleşen mezunların listesi. Sitede ad, üniversite ve bölüm olarak görünür."
+    >
+      <form onSubmit={handleSubmit} className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-12">
         <input type="hidden" name="id" value={editing.id} readOnly />
-        <input
-          placeholder="Ad Soyad"
-          name="name"
-          required
-          value={editing.name}
-          onChange={(e) => setEditing({ ...editing, name: e.target.value })}
-          className={`${inputClass} sm:col-span-4`}
-        />
-        <input
-          placeholder="Üniversite"
-          name="university"
-          required
-          value={editing.university}
-          onChange={(e) => setEditing({ ...editing, university: e.target.value })}
-          className={`${inputClass} sm:col-span-4`}
-        />
-        <input
-          placeholder="Bölüm"
-          name="department"
-          value={editing.department || ""}
-          onChange={(e) => setEditing({ ...editing, department: e.target.value })}
-          className={`${inputClass} sm:col-span-3`}
-        />
-        <label className="flex items-center justify-center gap-1.5 sm:col-span-1">
+        <Field
+          label="Öğrenci Adı Soyadı"
+          hint="Sitede görünecek tam ad"
+          className="sm:col-span-4"
+        >
           <input
-            type="checkbox"
-            name="is_active"
-            checked={editing.is_active}
-            onChange={(e) => setEditing({ ...editing, is_active: e.target.checked })}
-            className="h-4 w-4 rounded border-[#D6DFEC] text-[#2B6FD6]"
+            name="name"
+            required
+            value={editing.name}
+            onChange={(e) => setEditing({ ...editing, name: e.target.value })}
+            className={inputClass}
+            placeholder="Örn: Abdussamet Güngör"
           />
-        </label>
-        <input
-          type="number"
-          placeholder="Sıra"
-          name="sort_order"
-          value={editing.sort_order}
-          onChange={(e) => setEditing({ ...editing, sort_order: e.target.value })}
-          className={`${inputClass} sm:col-span-2`}
-        />
-        <div className="flex gap-2 sm:col-span-10">
+        </Field>
+        <Field
+          label="Yerleştiği Üniversite"
+          hint="Üniversite adı"
+          className="sm:col-span-4"
+        >
+          <input
+            name="university"
+            required
+            value={editing.university}
+            onChange={(e) => setEditing({ ...editing, university: e.target.value })}
+            className={inputClass}
+            placeholder="Örn: Boğaziçi Üniversitesi"
+          />
+        </Field>
+        <Field
+          label="Bölüm"
+          hint="Fakülte / bölüm adı"
+          className="sm:col-span-4"
+        >
+          <input
+            name="department"
+            value={editing.department || ""}
+            onChange={(e) => setEditing({ ...editing, department: e.target.value })}
+            className={inputClass}
+            placeholder="Örn: Tıp (İng.)"
+          />
+        </Field>
+        <Field
+          label="Liste Sırası"
+          hint="Küçük sayı üstte görünür"
+          className="sm:col-span-3"
+        >
+          <input
+            type="number"
+            name="sort_order"
+            value={editing.sort_order}
+            onChange={(e) => setEditing({ ...editing, sort_order: e.target.value })}
+            className={inputClass}
+            placeholder="1"
+          />
+        </Field>
+        <Field
+          label="Yayın Durumu"
+          hint="Pasif kayıt sitede gizlenir"
+          className="sm:col-span-3"
+        >
+          <label className="flex h-[38px] items-center gap-2 rounded-lg border border-[#D6DFEC] px-3">
+            <input
+              type="checkbox"
+              name="is_active"
+              checked={editing.is_active}
+              onChange={(e) => setEditing({ ...editing, is_active: e.target.checked })}
+              className="h-4 w-4 rounded border-[#D6DFEC] text-[#2B6FD6]"
+            />
+            <span className="text-[12px] font-semibold text-[#465367]">Aktif (sitede göster)</span>
+          </label>
+        </Field>
+        <div className="flex items-end gap-2 sm:col-span-6">
           <button
             type="submit"
             disabled={isPending}
             className="rounded-lg bg-[#042352] px-4 py-2 text-[13px] font-bold text-white hover:bg-[#124DA6] disabled:opacity-60"
           >
-            {editing.id ? "Güncelle" : "Ekle"}
+            {editing.id ? "Güncelle" : "Mezun Ekle"}
           </button>
           {editing.id ? (
             <button
@@ -386,42 +469,62 @@ function HighlightsManager({ highlights }) {
   }
 
   return (
-    <SectionCard title="Öne Çıkan Sonuçlar (Sayısal, Sözel vb.)">
-      <form onSubmit={handleSubmit} className="mb-5 grid grid-cols-1 gap-2 sm:grid-cols-12">
+    <SectionCard
+      title="Öne Çıkan Sonuçlar"
+      description="Altta koyu kutularda görünen alan başarıları (ör. SAY · TG 137.si)."
+    >
+      <form onSubmit={handleSubmit} className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-12">
         <input type="hidden" name="id" value={editing.id} readOnly />
-        <input
-          placeholder="Alan (örn. Sayısal)"
-          name="track"
-          required
-          value={editing.track}
-          onChange={(e) => setEditing({ ...editing, track: e.target.value })}
-          className={`${inputClass} sm:col-span-4`}
-        />
-        <input
-          placeholder="Sonuç (örn. İlk 1000)"
-          name="result"
-          required
-          value={editing.result}
-          onChange={(e) => setEditing({ ...editing, result: e.target.value })}
-          className={`${inputClass} sm:col-span-5`}
-        />
-        <input
-          type="number"
-          placeholder="Sıra"
-          name="sort_order"
-          value={editing.sort_order}
-          onChange={(e) => setEditing({ ...editing, sort_order: e.target.value })}
-          className={`${inputClass} sm:col-span-2`}
-        />
-        <label className="flex items-center justify-center gap-1.5 sm:col-span-1">
+        <Field
+          label="Alan / Puan Türü"
+          hint="Örn: SAY, EA, SÖZ, DİL"
+          className="sm:col-span-4"
+        >
           <input
-            type="checkbox"
-            name="is_active"
-            checked={editing.is_active}
-            onChange={(e) => setEditing({ ...editing, is_active: e.target.checked })}
-            className="h-4 w-4 rounded border-[#D6DFEC] text-[#2B6FD6]"
+            name="track"
+            required
+            value={editing.track}
+            onChange={(e) => setEditing({ ...editing, track: e.target.value })}
+            className={inputClass}
+            placeholder="Örn: SAY"
           />
-        </label>
+        </Field>
+        <Field
+          label="Başarı Sonucu"
+          hint="Sitede büyük yazılan sonuç"
+          className="sm:col-span-5"
+        >
+          <input
+            name="result"
+            required
+            value={editing.result}
+            onChange={(e) => setEditing({ ...editing, result: e.target.value })}
+            className={inputClass}
+            placeholder="Örn: TG 137.si"
+          />
+        </Field>
+        <Field label="Sıra" hint="Soldan sağa" className="sm:col-span-2">
+          <input
+            type="number"
+            name="sort_order"
+            value={editing.sort_order}
+            onChange={(e) => setEditing({ ...editing, sort_order: e.target.value })}
+            className={inputClass}
+            placeholder="1"
+          />
+        </Field>
+        <Field label="Yayında" hint="Sitede göster" className="sm:col-span-1">
+          <label className="flex h-[38px] items-center gap-2 rounded-lg border border-[#D6DFEC] px-3">
+            <input
+              type="checkbox"
+              name="is_active"
+              checked={editing.is_active}
+              onChange={(e) => setEditing({ ...editing, is_active: e.target.checked })}
+              className="h-4 w-4 rounded border-[#D6DFEC] text-[#2B6FD6]"
+            />
+            <span className="text-[12px] font-semibold text-[#465367]">Aktif</span>
+          </label>
+        </Field>
         <div className="flex gap-2 sm:col-span-12">
           <button
             type="submit"
